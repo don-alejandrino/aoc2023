@@ -1,6 +1,5 @@
 import copy
 
-import numpy
 import numpy as np
 
 EXAMPLE1 = """
@@ -37,11 +36,11 @@ def parse_input(text):
     for line in text.strip().split("\n"):
         field.append(list(line.strip()))
 
-    return numpy.array(field)
+    return np.array(field)
 
 
 def get_starting_coordinates(field):
-    coords = numpy.where(field == "S")
+    coords = np.where(field == "S")
     assert len(coords[0]) == 1, "Multiple starting points detected!"
 
     return coords[0][0], coords[1][0]
@@ -110,7 +109,7 @@ def get_num_enclosed_tiles_using_floodfill(loop_tiles_double_res):
     coords_to_visit = []
 
     # Find initial "outside" point
-    starting_idx_candidates = numpy.where(filled_loop_tiles == 0)
+    starting_idx_candidates = np.where(filled_loop_tiles == 0)
     coords_to_visit.append([starting_idx_candidates[0][0], starting_idx_candidates[1][0]])
     i_max, j_max = loop_tiles_double_res.shape
     while coords_to_visit:
@@ -128,7 +127,7 @@ def get_num_enclosed_tiles_using_floodfill(loop_tiles_double_res):
                 coords_to_visit.append([i - 1, j])
 
     filled_loop_tiles_original_res = filled_loop_tiles[::2, ::2]
-    num_enclosed_tiles = len(numpy.where(filled_loop_tiles_original_res == 0)[0])
+    num_enclosed_tiles = len(np.where(filled_loop_tiles_original_res == 0)[0])
 
     return num_enclosed_tiles
 
