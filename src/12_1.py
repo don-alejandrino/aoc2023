@@ -16,11 +16,10 @@ def parse_input(text, num_copies=1):
         springs, groups_text = map(lambda s: s.strip(), line.strip().split(" "))
         groups = list(map(int, groups_text.strip().split(",")))
         springs += "?"
-        for i in range(num_copies - 1):
-            groups.extend(groups)
-            springs += springs
-        springs = springs[:-1]
-        rows.append([list(springs), groups, get_positions_of_unknown_springs(springs)])
+        springs = list(springs * num_copies)[:-1]
+        rows.append(
+            [springs, tuple(groups * num_copies), get_positions_of_unknown_springs(springs)]
+        )
 
     return rows
 
@@ -46,7 +45,7 @@ def get_groups_of_operational_springs(springs):
     if group_length != 0:
         operational_springs.append(group_length)
 
-    return operational_springs
+    return tuple(operational_springs)
 
 
 def get_num_combinations(springs, num_operational_springs, num_broken_springs, positions_of_unknown_springs,
