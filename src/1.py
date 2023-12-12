@@ -15,6 +15,7 @@ zoneight234
 7pqrstsixteen
 """
 
+
 def get_calibration_number(input_text):
     res = 0
     for line in input_text.strip().split("\n"):
