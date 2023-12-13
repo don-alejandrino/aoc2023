@@ -111,16 +111,16 @@ if __name__ == "__main__":
     with open("../inputs/input13.txt", "r") as fh:
         in_text = fh.read()
 
-    patterns = parse_input(in_text)
+    ash_and_rocks_patterns = parse_input(in_text)
 
     # PART 1
     start = time.perf_counter()
-    res = sum(map(find_reflection_index, patterns))
+    res = sum(map(find_reflection_index, ash_and_rocks_patterns))
     end = time.perf_counter()
     print(f"Part 1 Result: {res}. Took {(end - start) * 1000:.2f} ms.")
 
     # PART 2
     start = time.perf_counter()
-    res = sum(map(find_new_reflection_index, patterns))
+    res = sum(map(find_new_reflection_index, ash_and_rocks_patterns))
     end = time.perf_counter()
     print(f"Part 2 Result: {res}. Took {(end - start) * 1000:.2f} ms.")
