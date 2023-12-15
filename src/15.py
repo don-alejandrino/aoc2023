@@ -20,7 +20,7 @@ def get_lens_information(lens_text: str) -> List[str]:
 
 
 def parse_input_part_2(text: str) -> List[List[str]]:
-    return list(map(get_lens_information, text.strip().split(",")))
+    return list(map(get_lens_information, parse_input(text)))
 
 
 def calculate_hash(seq: str) -> int:
