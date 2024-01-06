@@ -103,7 +103,7 @@ def get_three_cut_and_multiply_subgraph_sizes(graph: dict[int, list[int]], num_t
                 raise ValueError("Too may node weights remained after graph contraction!")
             return prod
 
-    raise RuntimeError(f"Could not find graph three-cut after {num_tries} iteration. Please try increasing num_tries.")
+    raise RuntimeError(f"Could not find graph three-cut after {num_tries} iterations. Please try increasing num_tries.")
 
 
 def fast_min_cut(graph: dict[int, list[int]], node_weights: dict[str, int] = None, decay_fac: int = 0.666):
@@ -114,13 +114,13 @@ def fast_min_cut(graph: dict[int, list[int]], node_weights: dict[str, int] = Non
         return contract_graph(graph, node_weights)
     else:
         t = int(np.ceil(decay_fac * (1 + num_nodes / np.sqrt(2))))
-        result = fast_min_cut(*contract_graph(copy.deepcopy(graph), copy.deepcopy(node_weights), t))
+        result = fast_min_cut(*contract_graph(copy.deepcopy(graph), node_weights.copy(), t))
         if get_num_edges(result[0]) == 3:
             # Three-cut found (due to the specific problem input, there must exist one). Hence, we can abort early
             return result
         else:
             # Karger–Stein tree search
-            options = [result, fast_min_cut(*contract_graph(copy.deepcopy(graph), copy.deepcopy(node_weights), t))]
+            options = [result, fast_min_cut(*contract_graph(copy.deepcopy(graph), node_weights.copy(), t))]
             return min(options, key=lambda item: get_num_edges(item[0]))
 
 
