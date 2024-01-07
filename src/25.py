@@ -44,10 +44,7 @@ def get_node_id(node_name: str) -> int:
         return next_id
 
 
-def contract_random_edge(
-        graph: dict[int, list[int]],
-        node_weights: dict[str, int]
-) -> tuple[dict[int, set[int]], : dict[str, int]]:
+def contract_random_edge(graph: dict[int, list[int]], node_weights: dict[str, int]) -> dict[int, list[int]]:
     node_keep = np.random.choice(list(graph.keys()))
     while not graph[node_keep]:
         node_keep = np.random.choice(list(graph.keys()))
@@ -81,11 +78,9 @@ def get_num_edges(graph: dict[int, list[int]]) -> int:
 
 def contract_graph(
         graph: dict[int, list[int]],
-        node_weights: dict[str, int] = None,
+        node_weights: dict[str, int],
         t: int = 2
-) -> tuple[dict[int, set[int]], : dict[str, int]]:
-    if node_weights is None:
-        node_weights = {}
+) -> tuple[dict[int, list[int]], dict[str, int]]:
     while len(graph) > t or get_num_nodes(graph) > t:
         graph = contract_random_edge(graph, node_weights)
 
@@ -106,7 +101,11 @@ def get_three_cut_and_multiply_subgraph_sizes(graph: dict[int, list[int]], num_t
     raise RuntimeError(f"Could not find graph three-cut after {num_tries} iterations. Please try increasing num_tries.")
 
 
-def fast_min_cut(graph: dict[int, list[int]], node_weights: dict[str, int] = None, decay_fac: int = 0.666):
+def fast_min_cut(
+        graph: dict[int, list[int]],
+        node_weights: dict[str, int] = None,
+        decay_fac: int = 0.666
+) -> tuple[dict[int, list[int]], dict[str, int]]:
     if node_weights is None:
         node_weights = {}
     num_nodes = get_num_nodes(graph)
